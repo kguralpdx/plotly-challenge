@@ -104,8 +104,7 @@ function init() {
             autorange: true,
         },
     };
-
-
+        // Create the trace including orientation so the bar chart is horizontal
         var trace1 = {
           type: 'bar',
           x: sampleValues,
