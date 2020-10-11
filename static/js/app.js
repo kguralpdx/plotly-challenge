@@ -10,8 +10,11 @@ function init() {
       // var endDate = data.dataset.end_date;
       // var dates = unpack(data.dataset.data, 0);
       // var closingPrices = unpack(data.dataset.data, 4);
+
+      var defaultName = names[0];
   
       console.log(names);
+      console.log(defaultName);
 
       // Build Test Subject dropdown
       // d3.select("body").append("p").text("one").attr("id","p_1");
@@ -132,6 +135,11 @@ function init() {
 };
 
 function optionChanged() {
+
+   // Prevent the page from refreshing
+   //d3.event.preventDefault();
+
+
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");
     // Assign the value of the dropdown menu option to a variable
