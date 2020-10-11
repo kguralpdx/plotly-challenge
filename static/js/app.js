@@ -132,12 +132,13 @@ function init() {
         var otulabelsBB = samples[0].otu_labels
 
         var trace = {
+          type: "scatter", 
           x: otuidBB,
           y: sampleBB,
           text: otulabelsBB,
           mode: 'markers',
           marker: {
-            color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+            color: otuidBB,
             size: sampleBB
           }
         };
@@ -145,7 +146,7 @@ function init() {
         var data = [trace];
         
         var layout = {
-          title: 'Bubble Chart Hover Text',
+          title: `Samples for Test Subject ID ${defaultID}`,
           showlegend: false,
           height: 600,
           width: 1200
