@@ -1,7 +1,7 @@
 function init() {
   // Get the data
   d3.json("./data/samples.json").then((data) => {
-    console.log(data);
+    //console.log(data);
 
       // Grab values from the data json object to build the plots
       var names = data.names;
@@ -14,10 +14,10 @@ function init() {
       // Setting the page to open using the first test subject id
       var defaultID = names[0];
   
-      console.log(names);
-      console.log(defaultID);
-      console.log(metadata);
-      console.log(samples[0]);
+      // console.log(names);
+      // console.log(defaultID);
+      // console.log(metadata);
+      // console.log(samples[0]);
 
       // Build Test Subject dropdown
       // d3.select("body").append("p").text("one").attr("id","p_1");
@@ -30,20 +30,16 @@ function init() {
         .text(d => d);
 
       // Populate Demographic Table
-
       // Loop through the metadata and return just the row matching the dropdown value
       metadata.forEach(row => {
         if (row.id === parseInt(defaultID)) {
-            console.log(row);
+            //console.log(row);
             var sampleDiv = d3.selectAll("#sample-metadata")
             var ulTag = sampleDiv.append("ul");
             //for (const [key, value] of Object.entries(row)) {
               Object.entries(row).forEach(([key, value]) =>
                 ulTag.append("li").text(`${key}: ${value}`) 
-                
               );
-              
-              //console.log(`${key}: ${value}`);
           }
         //}
       });
@@ -80,7 +76,7 @@ function init() {
         .slice(0, 10)
         // Reverse the order so they get plotted correctly 
         .reverse();
-        console.log(sampleValues);
+        //console.log(sampleValues);
 
       // Get the y axis data
       // Create a new array that concatenates OTU to the beginning of each otu_id
@@ -89,11 +85,11 @@ function init() {
         .slice(0,10)
         // Reverse the order for plotting
         .reverse();
-          console.log(otuLabels);
+          //console.log(otuLabels);
 
       // Hovertext
       var otuHover = samples[0].otu_labels.slice(0,10).reverse();
-       console.log(otuHover);
+       //console.log(otuHover);
 
       var layout = {
         title: `Top 10 OTUs for Test Subject ID ${defaultID}`,
@@ -145,7 +141,7 @@ function init() {
       var data = [trace];
       
       var layout = {
-        title: `Samples for Test Subject ID ${defaultID}`,
+        title: `Prevalence of Microbes for Test Subject ID ${defaultID}`,
         showlegend: false,
         height: 600,
         width: 1200
@@ -162,23 +158,23 @@ function optionChanged() {
    //d3.event.preventDefault();
   // Get the data
   d3.json("./data/samples.json").then((data) => {
-    console.log(data);
+    //console.log(data);
 
     // Grab values from the data json object to build the plots
     var names = data.names;
     var metadata = data.metadata;
     var samples = data.samples;
 
-    // Use D3 to select the dropdown menu
+    // Use D3 to select the dropdown menu and assign it to a variable
     var testSubject = d3.select("#selDataset").node().value;
     // Assign the value of the dropdown menu option to a variable
     //var testSubject = dropdownMenu.property("value");
-      console.log(testSubject)
+      //console.log(testSubject)
 
     // Loop through the metadata and return just the row matching the dropdown value
     metadata.forEach(row => {
       if (row.id === parseInt(testSubject)) {
-          console.log(row);
+          //console.log(row);
           var sampleDiv = d3.selectAll("#sample-metadata")
           // Clear out the previous test subject's data
           sampleDiv.html("");
@@ -186,17 +182,14 @@ function optionChanged() {
           //for (const [key, value] of Object.entries(row)) {
             Object.entries(row).forEach(([key, value]) =>
               ulTag.append("li").text(`${key}: ${value}`) 
-              
             );
-            
-            //console.log(`${key}: ${value}`);
         }
       //}
     });
 
     samples.forEach(sample => {
       if (sample.id === (testSubject)) {
-        console.log(sample);
+        //console.log(sample);
 
       // Horizontal Bar plot
       var sampleValues = sample.sample_values
@@ -206,7 +199,7 @@ function optionChanged() {
         .slice(0, 10)
         // Reverse the order so they get plotted correctly 
         .reverse();
-          console.log(sampleValues);
+          //console.log(sampleValues);
 
       // Get the y axis data
       // Create a new array that concatenates OTU to the beginning of each otu_id
@@ -215,11 +208,11 @@ function optionChanged() {
         .slice(0,10)
         // Reverse the order for plotting
         .reverse();
-          console.log(otuLabels);
+          //console.log(otuLabels);
 
       // Hovertext
       var otuHover = sample.otu_labels.slice(0,10).reverse();
-        console.log(otuHover);
+        //console.log(otuHover);
 
       var layout = {
         title: `Top 10 OTUs for Test Subject ID ${testSubject}`,
@@ -246,14 +239,7 @@ function optionChanged() {
 
 
     // Bubble Plot
-    // samples.forEach(sample => {
-    //   if (sample.id === (testSubject)) {
-    //     console.log(sample);
-
-
         // Get x values
-
-
         var otuidBB = sample.otu_ids
 
         // Get y values
@@ -278,7 +264,7 @@ function optionChanged() {
         var data = [trace];
         
         var layout = {
-          title: `Samples for Test Subject ID ${testSubject}`,
+          title: `Prevalence of Microbes for Test Subject ID ${testSubject}`,
           showlegend: false,
           height: 600,
           width: 1200
