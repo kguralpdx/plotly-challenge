@@ -47,8 +47,8 @@ function init() {
           }
         //}
       });
-      // var filteredData = metadata.filter(id => id === parseInt(defaultName));
-      //   console.log(filteredData);
+      //  var filteredData = metadata.filter(id => id === parseInt(defaultID));
+      //    console.log(filteredData);
 
 
 
@@ -96,116 +96,78 @@ function init() {
        console.log(otuHover);
 
       var layout = {
-        //title: `ID ${defaultID} Data`,
+        title: `Top 10 OTUs for Test Subject ID ${defaultID}`,
         yaxis: {
-            autorange: true,
+          autorange: true,
         },
         xaxis: {
-            autorange: true,
+          autorange: true,
         },
-    };
-        // Create the trace including orientation so the bar chart is horizontal
-        var trace1 = {
-          type: 'bar',
-          x: sampleValues,
-          y: otuLabels,
-          text: otuHover,
-          orientation: 'h'
-        };
-        
-        var data = [trace1];
-
-        // Create the bar plot
-        Plotly.newPlot("bar", data, layout);
-
+      };
+      // Create the trace including orientation so the bar chart is horizontal
+      var trace1 = {
+        type: 'bar',
+        x: sampleValues,
+        y: otuLabels,
+        text: otuHover,
+        orientation: 'h'
+      };
       
+      var data = [trace1];
 
-        // Bubble Plot
-
-        // Get x values
-        var otuidBB = samples[0].otu_ids
-
-        // Get y values
-        var sampleBB = samples[0].sample_values
-
-        // Get text values
-        var otulabelsBB = samples[0].otu_labels
-
-        var trace = {
-          type: "scatter", 
-          x: otuidBB,
-          y: sampleBB,
-          text: otulabelsBB,
-          mode: 'markers',
-          marker: {
-            color: otuidBB,
-            size: sampleBB,
-            colorscale: "Portland"
-          }
-        };
-        
-        var data = [trace];
-        
-        var layout = {
-          title: `Samples for Test Subject ID ${defaultID}`,
-          showlegend: false,
-          height: 600,
-          width: 1200
-        };
-        
-        Plotly.newPlot('bubble', data, layout);
-
-      });
+      // Create the bar plot
+      Plotly.newPlot("bar", data, layout);
 
 
+      // Bubble Plot
+      // Get x values
+      var otuidBB = samples[0].otu_ids
 
+      // Get y values
+      var sampleBB = samples[0].sample_values
 
+      // Get text values
+      var otulabelsBB = samples[0].otu_labels
 
+      var trace = {
+        type: "scatter", 
+        x: otuidBB,
+        y: sampleBB,
+        text: otulabelsBB,
+        mode: 'markers',
+        marker: {
+          color: otuidBB,
+          size: sampleBB,
+          colorscale: "Portland"
+        }
+      };
+      
+      var data = [trace];
+      
+      var layout = {
+        title: `Samples for Test Subject ID ${defaultID}`,
+        showlegend: false,
+        height: 600,
+        width: 1200
+      };
+      
+      Plotly.newPlot('bubble', data, layout);
 
-
-
-
-
-
-   
-   
-   
-   
-    //  Create the Traces
-    // var trace1 = {
-    //   x: data.organ,
-    //   y: data.survival.map(val => Math.sqrt(val)),
-    //   type: "box",
-    //   name: "Cancer Survival",
-    //   boxpoints: "all"
-    // };
-  
-    // // Create the data array for the plot
-    // var data = [trace1];
-  
-    // // Define the plot layout
-    // var layout = {
-    //   title: "Square Root of Cancer Survival by Organ",
-    //   xaxis: { title: "Organ" },
-    //   yaxis: { title: "Square Root of Survival" }
-    // };
-  
-    // // Plot the chart to a div tag with id "plot"
-    // Plotly.newPlot("plot", data, layout);
-  //})
+  });
 };
 
 function optionChanged() {
 
    // Prevent the page from refreshing
    //d3.event.preventDefault();
-    // Get the data
+  // Get the data
   d3.json("./data/samples.json").then((data) => {
     console.log(data);
 
-      // Grab values from the data json object to build the plots
-      var names = data.names;
-      var metadata = data.metadata;
+    // Grab values from the data json object to build the plots
+    var names = data.names;
+    var metadata = data.metadata;
+    var samples = data.samples;
 
     // Use D3 to select the dropdown menu
     var testSubject = d3.select("#selDataset").node().value;
@@ -232,42 +194,99 @@ function optionChanged() {
       //}
     });
 
+    samples.forEach(sample => {
+      if (sample.id === (testSubject)) {
+        console.log(sample);
 
-          // Bar plot
+      // Horizontal Bar plot
+      var sampleValues = sample.sample_values
+        // Sort values in descending order
+        .sort((a, b) => b - a)
+        // Get the top 10 highest values
+        .slice(0, 10)
+        // Reverse the order so they get plotted correctly 
+        .reverse();
+          console.log(sampleValues);
 
-        // var data = [{
-        //   type: 'bar',
-        //   x: [20, 14, 23],
-        //   y: ['giraffes', 'orangutans', 'monkeys'],
-        //   orientation: 'h'
-        // }];
+      // Get the y axis data
+      // Create a new array that concatenates OTU to the beginning of each otu_id
+      var otuLabels = sample.otu_ids.map(d => `OTU ${d}`)
+        // Get the first 10
+        .slice(0,10)
+        // Reverse the order for plotting
+        .reverse();
+          console.log(otuLabels);
+
+      // Hovertext
+      var otuHover = sample.otu_labels.slice(0,10).reverse();
+        console.log(otuHover);
+
+      var layout = {
+        title: `Top 10 OTUs for Test Subject ID ${testSubject}`,
+        yaxis: {
+            autorange: true,
+        },
+        xaxis: {
+            autorange: true,
+        },
+      };
+        // Create the trace including orientation so the bar chart is horizontal
+        var trace1 = {
+          type: 'bar',
+          x: sampleValues,
+          y: otuLabels,
+          text: otuHover,
+          orientation: 'h'
+        };
         
-        // Plotly.restyle('myDiv', data);
+        var data = [trace1];
+
+        // Create the bar plot
+        Plotly.newPlot("bar", data, layout);
 
 
-        // Bubble Plot
+    // Bubble Plot
+    // samples.forEach(sample => {
+    //   if (sample.id === (testSubject)) {
+    //     console.log(sample);
 
-        // var trace1 = {
-        //   x: [1, 2, 3, 4],
-        //   y: [10, 11, 12, 13],
-        //   text: ['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
-        //   mode: 'markers',
-        //   marker: {
-        //     color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-        //     size: [40, 60, 80, 100]
-        //   }
-        // };
+
+        // Get x values
+
+
+        var otuidBB = sample.otu_ids
+
+        // Get y values
+        var sampleBB = sample.sample_values
+
+        // Get text values
+        var otulabelsBB = sample.otu_labels
+
+        var trace = {
+          type: "scatter", 
+          x: otuidBB,
+          y: sampleBB,
+          text: otulabelsBB,
+          mode: 'markers',
+          marker: {
+            color: otuidBB,
+            size: sampleBB,
+            colorscale: "Portland"
+          }
+        };
         
-        // var data = [trace1];
+        var data = [trace];
         
-        // var layout = {
-        //   title: 'Bubble Chart Hover Text',
-        //   showlegend: false,
-        //   height: 600,
-        //   width: 600
-        // };
+        var layout = {
+          title: `Samples for Test Subject ID ${testSubject}`,
+          showlegend: false,
+          height: 600,
+          width: 1200
+        };
         
-        // Plotly.restyle('myDiv', data, layout);
+        Plotly.newPlot('bubble', data, layout);
+      }
+    });
 
   });
 };
