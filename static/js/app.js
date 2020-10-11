@@ -5,16 +5,17 @@ function init() {
 
       // Grab values from the data json object to build the plots
       var names = data.names;
-      // var stock = data.dataset.dataset_code;
+      var metadata = data.metadata;
       // var startDate = data.dataset.start_date;
       // var endDate = data.dataset.end_date;
       // var dates = unpack(data.dataset.data, 0);
       // var closingPrices = unpack(data.dataset.data, 4);
 
-      var defaultName = names[0];
+      var defaultID = names[0];
   
       console.log(names);
-      console.log(defaultName);
+      console.log(defaultID);
+      console.log(metadata);
 
       // Build Test Subject dropdown
       // d3.select("body").append("p").text("one").attr("id","p_1");
@@ -27,8 +28,43 @@ function init() {
         .text(d => d);
 
       // Populate Demographic Table
+      
 
 
+    //  var idTestSubject = unpack(metadata, 0);
+    //   console.log(idTestSubject);
+
+      // Loop through the metadata and return just the row matching the dropdown value
+      metadata.forEach(row => {
+        if (row.id === parseInt(defaultID)) {
+            console.log(row);
+            var sampleDiv = d3.selectAll("#sample-metadata")
+            var ulTag = sampleDiv.append("ul");
+            //for (const [key, value] of Object.entries(row)) {
+              Object.entries(row).forEach(([key, value]) =>
+                ulTag.append("li").text(`${key}: ${value}`) 
+                
+              );
+              
+              //console.log(`${key}: ${value}`);
+          }
+        //}
+      });
+      // var filteredData = metadata.filter(id => id === parseInt(defaultName));
+      //   console.log(filteredData);
+
+      // var table = d3.select("#summary-table");
+      // var tbody = table.select("tbody");
+      // var trow;
+      // for (var i = 0; i < 12; i++) {
+      //   trow = tbody.append("tr");
+      //   trow.append("td").text(dates[i]);
+      //   trow.append("td").text(openPrices[i]);
+      //   trow.append("td").text(highPrices[i]);
+      //   trow.append("td").text(lowPrices[i]);
+      //   trow.append("td").text(closingPrices[i]);
+      //   trow.append("td").text(volume[i]);
+      // }
 
 
 
@@ -99,13 +135,6 @@ function init() {
 
 
 
-
-
-
-
-
-
-
    
    
    
@@ -141,9 +170,9 @@ function optionChanged() {
 
 
     // Use D3 to select the dropdown menu
-    var dropdownMenu = d3.select("#selDataset");
+    var testSubject = d3.select("#selDataset").node().value;
     // Assign the value of the dropdown menu option to a variable
-    var testSubject = dropdownMenu.property("value");
+    //var testSubject = dropdownMenu.property("value");
       console.log(testSubject)
           // Bar plot
 
