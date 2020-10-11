@@ -6,16 +6,18 @@ function init() {
       // Grab values from the data json object to build the plots
       var names = data.names;
       var metadata = data.metadata;
-      // var startDate = data.dataset.start_date;
+      var samples = data.samples;
       // var endDate = data.dataset.end_date;
       // var dates = unpack(data.dataset.data, 0);
       // var closingPrices = unpack(data.dataset.data, 4);
 
+      // Setting the page to open using the first test subject id
       var defaultID = names[0];
   
       console.log(names);
       console.log(defaultID);
       console.log(metadata);
+      console.log(samples[0]);
 
       // Build Test Subject dropdown
       // d3.select("body").append("p").text("one").attr("id","p_1");
@@ -28,11 +30,6 @@ function init() {
         .text(d => d);
 
       // Populate Demographic Table
-      
-
-
-    //  var idTestSubject = unpack(metadata, 0);
-    //   console.log(idTestSubject);
 
       // Loop through the metadata and return just the row matching the dropdown value
       metadata.forEach(row => {
@@ -52,19 +49,6 @@ function init() {
       });
       // var filteredData = metadata.filter(id => id === parseInt(defaultName));
       //   console.log(filteredData);
-
-      // var table = d3.select("#summary-table");
-      // var tbody = table.select("tbody");
-      // var trow;
-      // for (var i = 0; i < 12; i++) {
-      //   trow = tbody.append("tr");
-      //   trow.append("td").text(dates[i]);
-      //   trow.append("td").text(openPrices[i]);
-      //   trow.append("td").text(highPrices[i]);
-      //   trow.append("td").text(lowPrices[i]);
-      //   trow.append("td").text(closingPrices[i]);
-      //   trow.append("td").text(volume[i]);
-      // }
 
 
 
@@ -87,16 +71,61 @@ function init() {
       //   selectDatatset.options.add(option);
 
 
-        // Bar plot
+      // Horizontal Bar plot
+      // Get x axis data
+      var sampleValues = samples[0].sample_values
+        // Sort values in descending order
+        .sort((a, b) => b - a)
+        // Get the top 10 highest values
+        .slice(0, 10)
+        // Reverse the order so they get plotted correctly 
+        .reverse();
+        console.log(sampleValues);
 
-        // var data = [{
-        //   type: 'bar',
-        //   x: [20, 14, 23],
-        //   y: ['giraffes', 'orangutans', 'monkeys'],
-        //   orientation: 'h'
-        // }];
+      // Get the y axis data
+      // Create a new array that concatenates OTU to the beginning of each otu_id
+      var otuLabels = samples[0].otu_ids.map(d => `OTU ${d}`)
+        // Get the first 10
+        .slice(0,10)
+        // Reverse the order for plotting
+        .reverse();
+          console.log(otuLabels);
+
+      // Hovertext
+      var otuHover = samples[0].otu_labels.slice(0,10).reverse();
+       console.log(otuHover);
+
+      var layout = {
+        //title: `ID ${defaultID} Data`,
+        yaxis: {
+            autorange: true,
+        },
+        xaxis: {
+            autorange: true,
+        },
+    };
+
+
+        var trace1 = {
+          type: 'bar',
+          x: sampleValues,
+          y: otuLabels,
+          text: otuHover,
+          orientation: 'h'
+        };
         
-        // Plotly.newPlot('myDiv', data);
+        var data = [trace1];
+
+        // Create the bar plot
+        Plotly.newPlot("bar", data, layout);
+
+        
+
+
+
+
+
+
 
 
         // Bubble Plot
