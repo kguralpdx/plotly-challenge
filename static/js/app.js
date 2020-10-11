@@ -167,13 +167,40 @@ function optionChanged() {
 
    // Prevent the page from refreshing
    //d3.event.preventDefault();
+    // Get the data
+  d3.json("./data/samples.json").then((data) => {
+    console.log(data);
 
+      // Grab values from the data json object to build the plots
+      var names = data.names;
+      var metadata = data.metadata;
 
     // Use D3 to select the dropdown menu
     var testSubject = d3.select("#selDataset").node().value;
     // Assign the value of the dropdown menu option to a variable
     //var testSubject = dropdownMenu.property("value");
       console.log(testSubject)
+
+    // Loop through the metadata and return just the row matching the dropdown value
+    metadata.forEach(row => {
+      if (row.id === parseInt(testSubject)) {
+          console.log(row);
+          var sampleDiv = d3.selectAll("#sample-metadata")
+          // Clear out the previous test subject's data
+          sampleDiv.html("");
+          var ulTag = sampleDiv.append("ul");
+          //for (const [key, value] of Object.entries(row)) {
+            Object.entries(row).forEach(([key, value]) =>
+              ulTag.append("li").text(`${key}: ${value}`) 
+              
+            );
+            
+            //console.log(`${key}: ${value}`);
+        }
+      //}
+    });
+
+
           // Bar plot
 
         // var data = [{
@@ -210,7 +237,8 @@ function optionChanged() {
         
         // Plotly.restyle('myDiv', data, layout);
 
-}
+  });
+};
 
 init();
   
