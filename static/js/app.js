@@ -118,38 +118,40 @@ function init() {
         // Create the bar plot
         Plotly.newPlot("bar", data, layout);
 
-        
-
-
-
-
-
-
-
+      
 
         // Bubble Plot
 
-        // var trace1 = {
-        //   x: [1, 2, 3, 4],
-        //   y: [10, 11, 12, 13],
-        //   text: ['A<br>size: 40', 'B<br>size: 60', 'C<br>size: 80', 'D<br>size: 100'],
-        //   mode: 'markers',
-        //   marker: {
-        //     color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
-        //     size: [40, 60, 80, 100]
-        //   }
-        // };
+        // Get x values
+        var otuidBB = samples[0].otu_ids
+
+        // Get y values
+        var sampleBB = samples[0].sample_values
+
+        // Get text values
+        var otulabelsBB = samples[0].otu_labels
+
+        var trace = {
+          x: otuidBB,
+          y: sampleBB,
+          text: otulabelsBB,
+          mode: 'markers',
+          marker: {
+            color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+            size: sampleBB
+          }
+        };
         
-        // var data = [trace1];
+        var data = [trace];
         
-        // var layout = {
-        //   title: 'Bubble Chart Hover Text',
-        //   showlegend: false,
-        //   height: 600,
-        //   width: 600
-        // };
+        var layout = {
+          title: 'Bubble Chart Hover Text',
+          showlegend: false,
+          height: 600,
+          width: 1200
+        };
         
-        // Plotly.newPlot('myDiv', data, layout);
+        Plotly.newPlot('bubble', data, layout);
 
       });
 
