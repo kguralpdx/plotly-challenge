@@ -139,7 +139,8 @@ function init() {
           mode: 'markers',
           marker: {
             color: otuidBB,
-            size: sampleBB
+            size: sampleBB,
+            colorscale: "Portland"
           }
         };
         
