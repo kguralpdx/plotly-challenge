@@ -12,9 +12,9 @@ The purpose of this challenge is to build an interactive dashboard to explore be
 * [data](data/) - this folder holds the belly button biodiversity dataset file used as the data source
     * [samples.json](data/samples.json) - this *JSON* file contains the belly button biodiversity data used to source the dashboard
 * [static](static/) - this folder holds two subfolders--css and js
-        * [css](static/css/) - this folder holds the *style.css* file that helps format the webpage
-        * [js](static/js/) - this folder holds the the *JavaScript* file
-            * [app.js](static/js/app.js) - this file contains the *JavaScript* script that manipulates the *HTML* page
+    * [css](static/css/) - this folder holds the *style.css* file that helps format the webpage
+    * [js](static/js/) - this folder holds the the *JavaScript* file
+        * [app.js](static/js/app.js) - this file contains the *JavaScript* script that manipulates the *HTML* page
 
 
 ## Development and Analysis
