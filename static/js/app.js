@@ -160,7 +160,7 @@ function init() {
       var level = washFreq;
 
       // Trig to calc meter point
-      var degrees = 180 - (level * 20),
+      var degrees = 180 - (level * 20), //multiplying by 20 to because the wash frequencies are not in degrees
           radius = .5;
       var radians = degrees * Math.PI / 180;
       var x = radius * Math.cos(radians);
@@ -348,7 +348,7 @@ function optionChanged() {
     var level = washFreq;
 
     // Trig to calc meter point
-    var degrees = 180 - (level * 20),
+    var degrees = 180 - (level * 20), //multiplying by 20 to because the wash frequencies are not in degrees
         radius = .5;
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians);
