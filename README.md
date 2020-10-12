@@ -19,9 +19,11 @@ The purpose of this challenge is to build an interactive dashboard to explore be
 
 ## Development and Analysis
 
-### Level 1 - Date Filtering
+### Steo 1 - Plotly
 
-We started out with an HTML page that had the `<div>` tags for the various plots that needed to be added. 
+We started out with an HTML page that had the `<div>` tags for the various plots that needed to be added and the Demographic Info as well as the `<section>` tags for the dropdown. We also had the *samples.json* file for the data and an empty *app.js* file to hold our script. First I rearranged the files we were given into a little different folder structure. I left the *index.html* file at the root since this needed to be deployed to *GitHubPages*. It seemed like the data file should not be in that root folder so added a *data* folder and moved it there. Created a *static* folder to hold the *css* folder should I need to create a *style.css* file (which I eventually did) and the *js* folder into which I put the *app.js* file.
+
+With the folder structure set and the files moved, next step was to start tackling the code. 
 
 Then came the date filtering and how to get that filtered data to appear as the only data in the table. Getting the data filtered was pretty straightforward; it was get that data into the table and as the only data that caused me grief. I tried several different options and did a lot of *Google* searching but was not having much luck. Finally found that I could loop through each row of data and show the row if that row's date matched the input date or hide the row if it didn't. It took a bit to get that working but it was displaying just the filtered rows as required. 
 
@@ -36,12 +38,10 @@ At this point I moved on to the *Level 2* challenge. However, later I re-read th
 
 Set Test Subject ID 940 as the default for when the page opens. It's the first one in the list so seemed like the natural choice to use for the default. That way, when the user uses the dropdown list for the first time, all the choices are listed below instead of potentially having to scroll up the list as well.
 
-I used *newPlot* for each plot in the *optionChanged* function instead of *restyle*. It was more straightforward and didn't seem to have any response issues which is what I could find as the advantage of using *restyle*. The dataset may just have been so small that responsiveness was negligible, though.
+I used *newPlot* for each plot in the *optionChanged* function instead of *restyle*. At first it seemed like *restyle* should be used because the plots already existed. But there wasn't anything to update, the underlying data was changing but none of the attributes were so *newPlot* seemed like the better route.
 
-I put sample text in each of the filter input boxes. It probably only needed to be in the *Enter a Date* one to show the date format needed but then I figured it would also show that *Enter a Country* was looking for just 2 characters and *Enter a State* used the state abbreviation, not the state name. So I just left them all showing sample text. I should have made the actual entered values a different color or at least darker to contrast better with the sample values. Right now it's a little difficult to tell which ones were manually entered and which ones are just for show. Time just wasn't on my side for this challenge.
+folder layout
 
-The input boxes are case-sensitive so all text needs to be lowercase.
+gauge and wash frequencies not in degrees
 
-I wish I had more time to format both pages more. But functionality took priority on this challenge.
-
-I really found the value of the *Google Inspector* through this challenge. It helped me immensely figure out where things were going astray and what types of values or what actual values it was returning, if any at all.
+I'm amazed at how many times I used `console.log()` and the amount of time analyzing results in *Google Inspector*. Both were invaluable for this challenge. Didn't realize how much I was looking at through *Google Inspector* until I was cleaning up my script at the end and having to delete `console.log()` over and over again.
