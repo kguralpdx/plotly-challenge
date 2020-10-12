@@ -29,7 +29,7 @@ Thinking that was basically solved, started changing the appearance of the webpa
 
 At this point I moved on to the *Level 2* challenge. However, later I re-read the rubric and saw that the table should re-render with the filtered data. The way I solved it didn't re-render the table, it just hid non-matching rows. So I ended up reworking things, scrapped the hide/show rows approach, and figured out how to get the table re-renedered with just the filtered data. The end result is below:
 
-![images/bb_dashboard.PNG](images/bb_dashboard.PNG)
+![Images/bb_dashboard.PNG](Images/bb_dashboard.PNG)
 
 
 ## Notes
