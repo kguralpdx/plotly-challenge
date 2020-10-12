@@ -7,9 +7,6 @@ function init() {
       var names = data.names;
       var metadata = data.metadata;
       var samples = data.samples;
-      // var endDate = data.dataset.end_date;
-      // var dates = unpack(data.dataset.data, 0);
-      // var closingPrices = unpack(data.dataset.data, 4);
 
       // Setting the page to open using the first test subject id
       var defaultID = names[0];
