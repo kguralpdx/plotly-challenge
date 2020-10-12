@@ -92,7 +92,7 @@ function init() {
        //console.log(otuHover);
 
       var layout = {
-        title: `Top 10 OTUs for Test Subject ID ${defaultID}`,
+        title: 'Top 10 OTUs',
         yaxis: {
           autorange: true,
         },
@@ -141,7 +141,7 @@ function init() {
       var data = [trace];
       
       var layout = {
-        title: `Prevalence of Microbes for Test Subject ID ${defaultID}`,
+        title: 'Prevalence of Microbes',
         showlegend: false,
         height: 600,
         width: 1200
@@ -279,7 +279,7 @@ function optionChanged() {
         //console.log(otuHover);
 
       var layout = {
-        title: `Top 10 OTUs for Test Subject ID ${testSubject}`,
+        title: 'Top 10 OTUs',
         yaxis: {
             autorange: true,
         },
@@ -328,7 +328,7 @@ function optionChanged() {
         var data = [trace];
         
         var layout = {
-          title: `Prevalence of Microbes for Test Subject ID ${testSubject}`,
+          title: 'Prevalence of Microbes',
           showlegend: false,
           height: 600,
           width: 1200

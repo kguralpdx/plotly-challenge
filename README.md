@@ -1,4 +1,4 @@
-# plotly-challenge
+### plotly-challenge
 # Belly Button Biodiversity
 
 ## Overview
@@ -8,28 +8,13 @@ The purpose of this challenge is to build an interactive dashboard to explore be
 
 ### Files and Folders
 
-#### Level 1
-
-* [UFO-level-1](UFO-level-1/) - main folder that holds all the files used and created for the level 1 part of this challenge
-    * [Main Page](UFO-level-1/index.html) - this *index.html* file is the page to open in a Browser; the full dataset is displayed when first opening this page. Filtering is applied by adding input in the form on the left side of the page and then clicking the *Filter Table* button
-    * [static](UFO-level-1/static/) - this folder holds three subfolders--css, images and js
-        * [css](UFO-level-1/static/css/) - this folder holds the *style.css* file that helps format the webpage
-        * [images](UFO-level-1/static/images/) - this folder holds the image files used as the background of the header section on the webpage (*PIA23121.jpg*) and the spaceship icon (*ufo.svg*)
-        * [js](UFO-level-1/static/js/) - this folder holds the two *JavaScript* files
-            * [app.js](UFO-level-1/static/js/app.js) - this file contains the *JavaScript* script that manipulates the *HTML* page and does the filtering
-            * [data.js](UFO-level-1/static/js/app.js) - this file contains the UFO sightings data
-
-#### Level 2
-
-* [UFO-level-2](UFO-level-2/) - main folder that holds all the files used and created for the level 2 part of this challenge
-    * [Main Page](UFO-level-2/index.html) - this *index.html* file is the page to open in a Browser; the full dataset is displayed when first opening this page. Filtering is applied by adding input in the form on the left side of the page and then clicking the *Filter Table* button
-    * [static](UFO-level-2/static/) - this folder holds three subfolders--css, images and js
-        * [css](UFO-level-2/static/css/) - this folder holds the *style.css* file that helps format the webpage
-        * [images](UFO-level-2/static/images/) - this folder holds the image files used as the background of the header section on the webpage (*nebulla.jpg*) and the spaceship icon (*ufo.svg*)
-        * [js](UFO-level-2/static/js/) - this folder holds the two *JavaScript* files
-            * [app.js](UFO-level-2/static/js/app.js) - this file contains the *JavaScript* script that manipulates the *HTML* page and does the filtering
-            * [data.js](UFO-level-2/static/js/app.js) - this file contains the UFO sightings data
-
+* [Main Page](index.html) - this *index.html* file is the page that opens in the Browser; this page is the dashboard that, when first opened, shows the data for just Test Subject ID 940. Data for different test subjects is show by selecting one of the entries in the *Test Subject ID No. * dropdown on the left side of the dashboard.
+* [data](data/) - this folder holds the belly button biodiversity dataset file used as the data source
+    * [samples.json](data/samples.json) - this *JSON* file contains the belly button biodiversity data used to source the dashboard
+* [static](static/) - this folder holds two subfolders--css and js
+        * [css](static/css/) - this folder holds the *style.css* file that helps format the webpage
+        * [js](static/js/) - this folder holds the the *JavaScript* file
+            * [app.js](static/js/app.js) - this file contains the *JavaScript* script that manipulates the *HTML* page
 
 
 ## Development and Analysis
