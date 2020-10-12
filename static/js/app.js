@@ -1,7 +1,7 @@
 function init() {
   // Get the data
   d3.json("./data/samples.json").then((data) => {
-    //console.log(data);
+    console.log(data);
 
       // Grab values from the data json object to build the plots
       var names = data.names;
@@ -31,9 +31,11 @@ function init() {
 
       // Populate Demographic Table
       // Loop through the metadata and return just the row matching the dropdown value
+      var washFreq;
       metadata.forEach(row => {
         if (row.id === parseInt(defaultID)) {
             //console.log(row);
+            washFreq = row.wfreq;
             var sampleDiv = d3.selectAll("#sample-metadata")
             var ulTag = sampleDiv.append("ul");
             //for (const [key, value] of Object.entries(row)) {
@@ -43,6 +45,7 @@ function init() {
           }
         //}
       });
+      console.log(washFreq);
       //  var filteredData = metadata.filter(id => id === parseInt(defaultID));
       //    console.log(filteredData);
 
@@ -148,6 +151,59 @@ function init() {
       };
       
       Plotly.newPlot('bubble', data, layout);
+
+
+      // Gauge Chart
+
+     // console.log(row.wfreq);
+      
+      var data = [
+       {
+        type: "indicator",
+        mode: "gauge",
+        value: washFreq,
+       // domain: {x: [0,1], y: [0,1]},
+        title: { text: "Belly Button Washing Frequency<br>Scrubs per Week"},
+        subtitle: {text: "Scrubs per Week"},
+        //title: { text: "Belly Button Washing Frequency", font: { size: 24 }},
+        //subtext: { text: "Scrubs per Week" },
+          gauge: {
+            axis: [
+              {range: [0, 9]},
+            ],  
+
+      //       bar: { color: "darkblue" },
+      //       bgcolor: "white",
+      //       borderwidth: 2,
+      //       bordercolor: "gray",
+            steps: [
+               { range: [0, 1], color: "dodgerblue" },
+               { range: [1, 2], color: "royalblue" },
+               { range: [2, 3], color: "royalblue" },
+               { range: [3, 4], color: "royalblue" },
+               { range: [4, 5]},//, color: "royalblue" },
+               { range: [5, 6]},//, color: "royalblue" },
+               { range: [6, 7]},//, color: "royalblue" },
+               { range: [7, 8]},//, color: "royalblue" },
+               { range: [8, 9]}//, color: "royalblue" }
+            ],
+      //       threshold: {
+      //         line: { color: "red", width: 4 },
+      //         thickness: 0.75,
+      //         value: 490
+      //       }
+           }
+        }
+      ];
+      
+      var glayout = {
+         width: 500,
+         height: 400,
+         margin: { t: 25, r: 25, l: 25, b: 0 },
+         font: { color: "black", family: "Arial" }
+       };
+      
+      Plotly.newPlot('gauge', data, glayout);
 
   });
 };
