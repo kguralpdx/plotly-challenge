@@ -11,13 +11,7 @@ function init() {
       // Setting the page to open using the first test subject id
       var defaultID = names[0];
   
-      // console.log(names);
-      // console.log(defaultID);
-      // console.log(metadata);
-      // console.log(samples[0]);
-
       // Build Test Subject dropdown
-      // d3.select("body").append("p").text("one").attr("id","p_1");
       var dropdownList = d3.selectAll("#selDataset")
         .selectAll("option")
         .data(names)

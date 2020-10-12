@@ -23,11 +23,13 @@ The purpose of this challenge is to build an interactive dashboard to explore be
 
 We started out with an HTML page that had the `<div>` tags for the various plots that needed to be added and the Demographic Info as well as the `<section>` tags for the dropdown. We also had the *samples.json* file for the data and an empty *app.js* file to hold our script. First I rearranged the files we were given into a little different folder structure. I left the *index.html* file at the root since this needed to be deployed to *GitHubPages*. It seemed like the data file should not be in that root folder so added a *data* folder and moved it there. Created a *static* folder to hold the *css* folder should I need to create a *style.css* file (which I eventually did) and the *js* folder into which I put the *app.js* file.
 
-With the folder structure set and the files moved, next step was to start tackling the code. 
+With the folder structure set and the files moved, next step was to start tackling the code. Got the connection to the data working and pulling. With the dashboard needing to be populated with something when it first opens, created an `init()` function and put the connection information inside that. Since everything in the dashboard revolves around the dropdown list of test subject ids, the next step was to get that created and populated. Did that by appending `<option>` tags to the `<select>` tags with an id of `selDataset`. Once that was populating, I decided to use the first Test Subject ID as the default when the page opens initially. So captured that value in a variable to be used later in the `init()` function code. 
 
-Then came the date filtering and how to get that filtered data to appear as the only data in the table. Getting the data filtered was pretty straightforward; it was get that data into the table and as the only data that caused me grief. I tried several different options and did a lot of *Google* searching but was not having much luck. Finally found that I could loop through each row of data and show the row if that row's date matched the input date or hide the row if it didn't. It took a bit to get that working but it was displaying just the filtered rows as required. 
+Then I moved on to the *Demographic Info* section. Was going to make this a table at first glance but an unordered list without the bullets seemed like a better fit so I went that route. I did run into some issues with the text and the margins so ended up resolving that by adding a *style.css* file and putting the style information in there regarding `<ul>` tags. Actually added it directly to the *index.html* file first but when I needed the *CSS* file for the gauge chart, I added the *style.css* file and put the code in there as well.
 
-Thinking that was basically solved, started changing the appearance of the webpage. I changed the background image in the top section of the page. I also formatted the *Filter Table* button to look more like a button and to center it. The spaceship icon was added to the button as well. I had wanted to try adding an icon in another challenge but ran out of time and with the icon already appearing in the header, this seemed like the perfect opportunity. I wanted to change the background color of the table section but figured I'd get to that if time allowed. 
+
+
+
 
 At this point I moved on to the *Level 2* challenge. However, later I re-read the rubric and saw that the table should re-render with the filtered data. The way I solved it didn't re-render the table, it just hid non-matching rows. So I ended up reworking things, scrapped the hide/show rows approach, and figured out how to get the table re-renedered with just the filtered data. The end result is below:
 
@@ -42,6 +44,6 @@ I used *newPlot* for each plot in the *optionChanged* function instead of *resty
 
 folder layout
 
-gauge and wash frequencies not in degrees
+gauge and wash frequencies not in degrees- size of gauge
 
 I'm amazed at how many times I used `console.log()` and the amount of time analyzing results in *Google Inspector*. Both were invaluable for this challenge. Didn't realize how much I was looking at through *Google Inspector* until I was cleaning up my script at the end and having to delete `console.log()` over and over again.
