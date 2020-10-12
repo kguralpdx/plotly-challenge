@@ -35,7 +35,7 @@ function init() {
       metadata.forEach(row => {
         if (row.id === parseInt(defaultID)) {
             //console.log(row);
-            washFreq = row.wfreq;
+            washFreq = row.wfreq; // use this in the Gauge Chart
             var sampleDiv = d3.selectAll("#sample-metadata")
             var ulTag = sampleDiv.append("ul");
             //for (const [key, value] of Object.entries(row)) {
@@ -154,8 +154,8 @@ function init() {
 
 
       // Gauge Chart
-
-     // console.log(row.wfreq);
+      // Got most of this code from https://com2m.de/blog/technology/gauge-charts-with-plotly/
+      // With some addition help from https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
 
       var level = washFreq;
 
@@ -178,7 +178,6 @@ function init() {
         x: [0], y:[0],
           marker: {size: 14, color:'850000'},
           showlegend: false,
-          //name: 'speed',
           text: level,
           hoverinfo: 'text'},
         { values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
@@ -187,9 +186,8 @@ function init() {
         direction: 'clockwise',
         textinfo: 'text',
         textposition:'inside',
-        marker: {colors:['skyblue', 'cornflowerblue', 'lightsteelblue', 'paleturquiose', 'lightskyblue','rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
-        'rgba(249, 168, 37, .5)', 'rgba(183,28,28, .5)',
-        'rgba(0, 0, 0, 0.5)'
+        marker: {colors:['EDFAFD', 'CAF0F8', 'ADE8F4', '90E0EF', '48CAE4', '00B4D8','0096C7', '0077B6',
+        '023E8A', '023E8A', '03045E)'
       ]},
         hoverinfo: 'label',
         hole: .4,
@@ -206,6 +204,7 @@ function init() {
               color: '850000'
             }
           }],
+        title: { text: "Belly Button Washing Frequency<br><span style='font-size:0.8em;color:gray;'>Scrubs per Week</span><br><span style='font-size:1em;color:darkgray;font-weight: bold;'></span>"},
         height: 400,
         width: 400,
         xaxis: {zeroline:false, showticklabels:false,
@@ -215,56 +214,6 @@ function init() {
       };
 
       Plotly.newPlot('gauge', data, layout);
-
-      
-      // var data = [
-      //  {
-      //   type: "indicator",
-      //   mode: "gauge",
-      //   value: washFreq,
-      //  // domain: {x: [0,1], y: [0,1]},
-      //   title: { text: "Belly Button Washing Frequency<br>Scrubs per Week"},
-      //   //subtitle: {text: "Scrubs per Week"},
-      //   //title: { text: "Belly Button Washing Frequency", font: { size: 24 }},
-      //   //subtext: { text: "Scrubs per Week" },
-      //     gauge: {
-      //       axis: [
-      //         {range: [0, 9]},
-      //       ],  
-
-      // //       bar: { color: "darkblue" },
-      // //       bgcolor: "white",
-      // //       borderwidth: 2,
-      // //       bordercolor: "gray",
-      //       steps: [
-      //          { range: [0, 1], color: "dodgerblue" },
-      //          { range: [1, 2], color: "royalblue" },
-      //          { range: [2, 3], color: "royalblue" },
-      //          { range: [3, 4], color: "royalblue" },
-      //          { range: [4, 5]},//, color: "royalblue" },
-      //          { range: [5, 6]},//, color: "royalblue" },
-      //          { range: [6, 7]},//, color: "royalblue" },
-      //          { range: [7, 8]},//, color: "royalblue" },
-      //          { range: [8, 9]}//, color: "royalblue" }
-      //       ],
-      // //       threshold: {
-      // //         line: { color: "red", width: 4 },
-      // //         thickness: 0.75,
-      // //         value: 490
-      // //       }
-      //      }
-      //   }
-      // ];
-      
-      // var glayout = {
-      //    width: 500,
-      //    height: 400,
-      //    margin: { t: 25, r: 25, l: 25, b: 0 },
-      //    font: { color: "black", family: "Arial" }
-      //  };
-      
-      // Plotly.newPlot('gauge', data, glayout);
-
   });
 };
 
@@ -288,9 +237,11 @@ function optionChanged() {
       //console.log(testSubject)
 
     // Loop through the metadata and return just the row matching the dropdown value
+    var washFreq;
     metadata.forEach(row => {
       if (row.id === parseInt(testSubject)) {
           //console.log(row);
+          washFreq = row.wfreq; // use this in the Gauge Chart
           var sampleDiv = d3.selectAll("#sample-metadata")
           // Clear out the previous test subject's data
           sampleDiv.html("");
@@ -389,6 +340,68 @@ function optionChanged() {
         Plotly.newPlot('bubble', data, layout);
       }
     });
+
+    // Gauge Chart
+    // Got most of this code from https://com2m.de/blog/technology/gauge-charts-with-plotly/
+    // With some addition help from https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
+
+    var level = washFreq;
+
+    // Trig to calc meter point
+    var degrees = 180 - (level * 20),
+        radius = .5;
+    var radians = degrees * Math.PI / 180;
+    var x = radius * Math.cos(radians);
+    var y = radius * Math.sin(radians);
+    var path1 = (degrees < 45 || degrees > 135) ? 'M -0.0 -0.025 L 0.0 0.025 L ' : 'M -0.025 -0.0 L 0.025 0.0 L ';
+    // Path: may have to change to create a better triangle
+    var mainPath = path1,
+        pathX = String(x),
+        space = ' ',
+        pathY = String(y),
+        pathEnd = ' Z';
+    var path = mainPath.concat(pathX,space,pathY,pathEnd);
+
+    var data = [{ type: 'scatter',
+      x: [0], y:[0],
+        marker: {size: 14, color:'850000'},
+        showlegend: false,
+        text: level,
+        hoverinfo: 'text'},
+      { values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
+      rotation: 90,
+      text: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', ''],
+      direction: 'clockwise',
+      textinfo: 'text',
+      textposition:'inside',
+      marker: {colors:['EDFAFD', 'CAF0F8', 'ADE8F4', '90E0EF', '48CAE4', '00B4D8','0096C7', '0077B6',
+      '023E8A', '023E8A', '03045E)'
+    ]},
+      hoverinfo: 'label',
+      hole: .4,
+      type: 'pie',
+      showlegend: false
+    }];
+
+    var layout = {
+      shapes:[{
+          type: 'path',
+          path: path,
+          fillcolor: '850000',
+          line: {
+            color: '850000'
+          }
+        }],
+      title: { text: "Belly Button Washing Frequency<br><span style='font-size:0.8em;color:gray;'>Scrubs per Week</span><br><span style='font-size:1em;color:darkgray;font-weight: bold;'></span>"},
+      height: 400,
+      width: 400,
+      xaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]},
+      yaxis: {zeroline:false, showticklabels:false,
+                showgrid: false, range: [-1, 1]}
+    };
+
+    Plotly.newPlot('gauge', data, layout);
 
   });
 };
