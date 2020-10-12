@@ -156,54 +156,114 @@ function init() {
       // Gauge Chart
 
      // console.log(row.wfreq);
-      
-      var data = [
-       {
-        type: "indicator",
-        mode: "gauge",
-        value: washFreq,
-       // domain: {x: [0,1], y: [0,1]},
-        title: { text: "Belly Button Washing Frequency<br>Scrubs per Week"},
-        subtitle: {text: "Scrubs per Week"},
-        //title: { text: "Belly Button Washing Frequency", font: { size: 24 }},
-        //subtext: { text: "Scrubs per Week" },
-          gauge: {
-            axis: [
-              {range: [0, 9]},
-            ],  
 
-      //       bar: { color: "darkblue" },
-      //       bgcolor: "white",
-      //       borderwidth: 2,
-      //       bordercolor: "gray",
-            steps: [
-               { range: [0, 1], color: "dodgerblue" },
-               { range: [1, 2], color: "royalblue" },
-               { range: [2, 3], color: "royalblue" },
-               { range: [3, 4], color: "royalblue" },
-               { range: [4, 5]},//, color: "royalblue" },
-               { range: [5, 6]},//, color: "royalblue" },
-               { range: [6, 7]},//, color: "royalblue" },
-               { range: [7, 8]},//, color: "royalblue" },
-               { range: [8, 9]}//, color: "royalblue" }
-            ],
-      //       threshold: {
-      //         line: { color: "red", width: 4 },
-      //         thickness: 0.75,
-      //         value: 490
-      //       }
-           }
-        }
-      ];
+      var level = washFreq;
+
+      // Trig to calc meter point
+      var degrees = 180 - (level * 20),
+          radius = .5;
+      var radians = degrees * Math.PI / 180;
+      var x = radius * Math.cos(radians);
+      var y = radius * Math.sin(radians);
+      var path1 = (degrees < 45 || degrees > 135) ? 'M -0.0 -0.025 L 0.0 0.025 L ' : 'M -0.025 -0.0 L 0.025 0.0 L ';
+      // Path: may have to change to create a better triangle
+      var mainPath = path1,
+          pathX = String(x),
+          space = ' ',
+          pathY = String(y),
+          pathEnd = ' Z';
+      var path = mainPath.concat(pathX,space,pathY,pathEnd);
+
+      var data = [{ type: 'scatter',
+        x: [0], y:[0],
+          marker: {size: 14, color:'850000'},
+          showlegend: false,
+          //name: 'speed',
+          text: level,
+          hoverinfo: 'text'},
+        { values: [81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81/9, 81],
+        rotation: 90,
+        text: ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6-7', '7-8', '8-9', ''],
+        direction: 'clockwise',
+        textinfo: 'text',
+        textposition:'inside',
+        marker: {colors:['skyblue', 'cornflowerblue', 'lightsteelblue', 'paleturquiose', 'lightskyblue','rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
+        'rgba(249, 168, 37, .5)', 'rgba(183,28,28, .5)',
+        'rgba(0, 0, 0, 0.5)'
+      ]},
+        hoverinfo: 'label',
+        hole: .4,
+        type: 'pie',
+        showlegend: false
+      }];
+
+      var layout = {
+        shapes:[{
+            type: 'path',
+            path: path,
+            fillcolor: '850000',
+            line: {
+              color: '850000'
+            }
+          }],
+        height: 400,
+        width: 400,
+        xaxis: {zeroline:false, showticklabels:false,
+                  showgrid: false, range: [-1, 1]},
+        yaxis: {zeroline:false, showticklabels:false,
+                  showgrid: false, range: [-1, 1]}
+      };
+
+      Plotly.newPlot('gauge', data, layout);
+
       
-      var glayout = {
-         width: 500,
-         height: 400,
-         margin: { t: 25, r: 25, l: 25, b: 0 },
-         font: { color: "black", family: "Arial" }
-       };
+      // var data = [
+      //  {
+      //   type: "indicator",
+      //   mode: "gauge",
+      //   value: washFreq,
+      //  // domain: {x: [0,1], y: [0,1]},
+      //   title: { text: "Belly Button Washing Frequency<br>Scrubs per Week"},
+      //   //subtitle: {text: "Scrubs per Week"},
+      //   //title: { text: "Belly Button Washing Frequency", font: { size: 24 }},
+      //   //subtext: { text: "Scrubs per Week" },
+      //     gauge: {
+      //       axis: [
+      //         {range: [0, 9]},
+      //       ],  
+
+      // //       bar: { color: "darkblue" },
+      // //       bgcolor: "white",
+      // //       borderwidth: 2,
+      // //       bordercolor: "gray",
+      //       steps: [
+      //          { range: [0, 1], color: "dodgerblue" },
+      //          { range: [1, 2], color: "royalblue" },
+      //          { range: [2, 3], color: "royalblue" },
+      //          { range: [3, 4], color: "royalblue" },
+      //          { range: [4, 5]},//, color: "royalblue" },
+      //          { range: [5, 6]},//, color: "royalblue" },
+      //          { range: [6, 7]},//, color: "royalblue" },
+      //          { range: [7, 8]},//, color: "royalblue" },
+      //          { range: [8, 9]}//, color: "royalblue" }
+      //       ],
+      // //       threshold: {
+      // //         line: { color: "red", width: 4 },
+      // //         thickness: 0.75,
+      // //         value: 490
+      // //       }
+      //      }
+      //   }
+      // ];
       
-      Plotly.newPlot('gauge', data, glayout);
+      // var glayout = {
+      //    width: 500,
+      //    height: 400,
+      //    margin: { t: 25, r: 25, l: 25, b: 0 },
+      //    font: { color: "black", family: "Arial" }
+      //  };
+      
+      // Plotly.newPlot('gauge', data, glayout);
 
   });
 };
