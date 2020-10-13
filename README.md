@@ -19,7 +19,7 @@ The purpose of this challenge is to build an interactive dashboard to explore be
 
 ## Development and Analysis
 
-### Steo 1 - Plotly
+### Step 1 - Plotly
 
 We started out with an HTML page that had the `<div>` tags for the various plots and the Demographic Info that needed to be added as well as the `<section>` tags for the dropdown. We also had the *samples.json* file for the data and an empty *app.js* file to hold our script. First I rearranged the files we were given into a little different folder structure. I left the *index.html* file at the root since this needed to be deployed to *GitHubPages*. It seemed like the data file should not be in that root folder so added a *data* folder and moved it there. Created a *static* folder to hold the *css* folder should I need to create a *style.css* file (which I eventually did) and the *js* folder into which I put the *app.js* file.
 
@@ -27,7 +27,7 @@ With the folder structure set and the files moved, next step was to start tackli
 
 Then I moved on to the *Demographic Info* section. Was going to make this a table at first glance but an unordered list without the bullets seemed like a better fit so I went that route. I did run into some issues with the text and the margins so ended up resolving that by adding a *style.css* file and putting the style information in there regarding `<ul>` tags. Actually added it directly to the *index.html* file first but when I needed the *CSS* file for the gauge chart, I added the *style.css* file and put the code in there as well.
 
-Next was the top 10 OTUs horizontal bar chart. I sorted the data first in descending order, then sliced out first 10, and then reversed the order once more because *Plotly* bar charts, when horizontal, start from the bottom and work up so the smallest value needed to be first. Had a little bit of trouble getting the size of the bar chart taller but ended up giving it a title so it was obvious what was appearing in the bar chart, and that ended up occupying some of the blank space at the top.
+Next was the top 10 OTUs horizontal bar chart. I sorted the data first in descending order, then sliced out first 10, and then reversed the order once more because *Plotly* bar charts, when horizontal, start from the bottom and work up so the smallest value needed to be first. Had a little bit of trouble getting the size of the bar chart to be taller. But I also wanted to add a title to it to clarify what data was actually being displayed. After adding the title, that ended up occupying some of the blank space at the top.
 
 The bubble chart was added next. This one ended up being a lot more straightforward than the bar chart; less data manipulation. Ran into an issue displaying everything at first. It would show the x-axis and y-axis but no bubbles. After reviewing things in *Google Inspector* and looking through the code, I realized I had used `[]` when creating both the *trace* variable and the *data* variable. Removed those from the *trace* variable definition and the bubbles appeared. I didn't like the colors being used for those, however, I did some googling to see how those could be changed. I stumbled upon the *colorscheme* property in the *Plotly* documentation and even though bubble plots weren't mentioned, I tried applying it anyway and it worked. I used the *Portland* colorscheme because I liked the colors and since this is Portland, it seemed to fit.
 
