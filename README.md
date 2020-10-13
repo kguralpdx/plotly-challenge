@@ -27,11 +27,18 @@ With the folder structure set and the files moved, next step was to start tackli
 
 Then I moved on to the *Demographic Info* section. Was going to make this a table at first glance but an unordered list without the bullets seemed like a better fit so I went that route. I did run into some issues with the text and the margins so ended up resolving that by adding a *style.css* file and putting the style information in there regarding `<ul>` tags. Actually added it directly to the *index.html* file first but when I needed the *CSS* file for the gauge chart, I added the *style.css* file and put the code in there as well.
 
+Next was the top 10 OTUs horizontal bar chart. I sorted the data first in descending order, then sliced out first 10, and then reversed the order once more because *Plotly* bar charts, when horizontal, start from the bottom and work up so the smallest value needed to be first. Had a little bit of trouble getting the size of the bar chart taller but ended up giving it a title so it was obvious what was appearing in the bar chart, and that ended up occupying some of the blank space at the top.
+
+The bubble was added next. This one ended up being a lot more straightforward than the bar chart; less data manipulation. Ran into an issue displaying everything at first. It would show the x-axis and y-axis but no bubbles. After reviewing things in *Google Inspector* and looking through the code, I realized I had used `[]` when creating both the *trace* variable and the *data* variable. Removed those from the *trace* variable definition and the bubbles appeared. I didn't like the colors being used for those, however, I did some googling to see how those could be changed. I stumbled upon the *colorscheme* property in the *Plotly* documentation and even though bubble plots weren't mentioned, I tried applying it anyway and it worked. I used the *Portland* colorscheme because I liked the colors and since this is Portland, it seemed to fit.
+
+That filled out the `init()` function. So still needed to completel the `optionChanged` function that would run when a new Test Subject ID is selected and updates all the plots withe new Test Subject's data. Mainly just copied all the `init()` function steps with the exception of having to change out the default Test Subject ID functionality. I did start creating this function once I got the dropdown list and Demographic Info sections working to make sure changing the Test Subject ID would update what was on the page.
 
 
+## Advanced Challenge - Gauge Chart
 
+I decided to try doing the gauge chart because I had some time and I wanted to see how to do it. I now know why it was called an *Advanced* challenge. I first went down the path of a *Plotly* gauge chart. It had the right shape but I couldn't find anything about how to add the needle. After much *Google* searching, I came about a few articles about using a pie chart instead. I did find one article that did a good job of breaking it all down except his gauge didn't have as many sections. But most of the code i used was found [here](https://com2m.de/blog/technology/gauge-charts-with-plotly/). That got me most of the way there except the needle wasn't really working as far as I could tell. After adding some *Values* and *Direction* information from [here](https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js), I was closer but still had the needle barely moving. After thinking it through a bit more, realized that the *wash frequencies* being used were not in degrees, so fixed that by multiplying those by 20 which got the needle pointing to the correct place on the gauge. Searched out a colorscheme and added that. 
 
-At this point I moved on to the *Level 2* challenge. However, later I re-read the rubric and saw that the table should re-render with the filtered data. The way I solved it didn't re-render the table, it just hid non-matching rows. So I ended up reworking things, scrapped the hide/show rows approach, and figured out how to get the table re-renedered with just the filtered data. The end result is below:
+The end result is below:
 
 ![Images/bb_dashboard.PNG](Images/bb_dashboard.PNG)
 
@@ -40,10 +47,8 @@ At this point I moved on to the *Level 2* challenge. However, later I re-read th
 
 Set Test Subject ID 940 as the default for when the page opens. It's the first one in the list so seemed like the natural choice to use for the default. That way, when the user uses the dropdown list for the first time, all the choices are listed below instead of potentially having to scroll up the list as well.
 
-I used *newPlot* for each plot in the *optionChanged* function instead of *restyle*. At first it seemed like *restyle* should be used because the plots already existed. But there wasn't anything to update, the underlying data was changing but none of the attributes were so *newPlot* seemed like the better route.
+I used *newPlot* for each plot in the *optionChanged* function instead of *restyle*. At first it seemed like *restyle* should be used because the plots already existed. But there wasn't anything to update, the underlying data was changing but none of the attributes were, so *newPlot* seemed like the better route.
 
-folder layout
-
-gauge and wash frequencies not in degrees- size of gauge
+The gauge is rather small on the dashboard but when I tried to make it larger, it didn't display correctly so I just left it as it.
 
 I'm amazed at how many times I used `console.log()` and the amount of time analyzing results in *Google Inspector*. Both were invaluable for this challenge. Didn't realize how much I was looking at through *Google Inspector* until I was cleaning up my script at the end and having to delete `console.log()` over and over again.
