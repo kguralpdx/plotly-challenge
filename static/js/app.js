@@ -38,8 +38,7 @@ function init() {
       });
       console.log(washFreq);
       //  var filteredData = metadata.filter(id => id === parseInt(defaultID));
-      //    console.log(filteredData);
-
+   
 
 
      // got help on this dropdown from https://www.aspsnippets.com/Articles/Populate-DropDownList-from-JSON-Array-using-JavaScript.aspx
@@ -146,7 +145,7 @@ function init() {
 
       // Gauge Chart
       // Got most of this code from https://com2m.de/blog/technology/gauge-charts-with-plotly/
-      // With some addition help from https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
+      // With some additional help from https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
 
       var level = washFreq;
 
@@ -334,7 +333,7 @@ function optionChanged() {
 
     // Gauge Chart
     // Got most of this code from https://com2m.de/blog/technology/gauge-charts-with-plotly/
-    // With some addition help from https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
+    // With some additional help from https://stackoverflow.com/questions/53211506/calculating-adjusting-the-needle-in-gauge-chart-plotly-js
 
     var level = washFreq;
 
