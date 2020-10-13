@@ -25,41 +25,15 @@ function init() {
       var washFreq;
       metadata.forEach(row => {
         if (row.id === parseInt(defaultID)) {
-            //console.log(row);
             washFreq = row.wfreq; // use this in the Gauge Chart
             var sampleDiv = d3.selectAll("#sample-metadata")
             var ulTag = sampleDiv.append("ul");
-            //for (const [key, value] of Object.entries(row)) {
               Object.entries(row).forEach(([key, value]) =>
                 ulTag.append("li").text(`${key}: ${value}`) 
               );
           }
-        //}
       });
-      console.log(washFreq);
-      //  var filteredData = metadata.filter(id => id === parseInt(defaultID));
-   
-
-
-     // got help on this dropdown from https://www.aspsnippets.com/Articles/Populate-DropDownList-from-JSON-Array-using-JavaScript.aspx
-      // var selectDatatset = document.getElementById("selDataset");
-
-      // // Add option tags for each name in dataset
-      // for (var i = 0; i < names.length; i++) {
-      //   var option = document.createElement("OPTION");
-
-      //   // Add the test subjects as the text
-      //   option.textContent = names[i];
-      //   console.log(option.textContent);
-
-      //   // Add the test subjects as the value
-      //   option.value = option.textContent;
-      //   console.log(option.value);
-
-      //   // Add the option tags
-      //   selectDatatset.options.add(option);
-
-
+     
       // Horizontal Bar plot
       // Get x axis data
       var sampleValues = samples[0].sample_values
@@ -69,7 +43,6 @@ function init() {
         .slice(0, 10)
         // Reverse the order so they get plotted correctly 
         .reverse();
-        //console.log(sampleValues);
 
       // Get the y axis data
       // Create a new array that concatenates OTU to the beginning of each otu_id
@@ -78,11 +51,9 @@ function init() {
         .slice(0,10)
         // Reverse the order for plotting
         .reverse();
-          //console.log(otuLabels);
 
       // Hovertext
       var otuHover = samples[0].otu_labels.slice(0,10).reverse();
-       //console.log(otuHover);
 
       var layout = {
         title: 'Top 10 OTUs',
@@ -93,6 +64,7 @@ function init() {
           autorange: true,
         },
       };
+
       // Create the trace including orientation so the bar chart is horizontal
       var trace1 = {
         type: 'bar',
@@ -135,6 +107,9 @@ function init() {
       
       var layout = {
         title: 'Prevalence of Microbes',
+        xaxis: {title: {
+          text: "OTU ID"}
+          },
         showlegend: false,
         height: 600,
         width: 1200
@@ -150,7 +125,7 @@ function init() {
       var level = washFreq;
 
       // Trig to calc meter point
-      var degrees = 180 - (level * 20), //multiplying by 20 to because the wash frequencies are not in degrees
+      var degrees = 180 - (level * 20), //multiplying by 20 because the wash frequencies are not in degrees
           radius = .5;
       var radians = degrees * Math.PI / 180;
       var x = radius * Math.cos(radians);
@@ -209,44 +184,33 @@ function init() {
 
 function optionChanged() {
 
-   // Prevent the page from refreshing
-   //d3.event.preventDefault();
   // Get the data
   d3.json("./data/samples.json").then((data) => {
-    //console.log(data);
 
     // Grab values from the data json object to build the plots
-    var names = data.names;
     var metadata = data.metadata;
     var samples = data.samples;
 
     // Use D3 to select the dropdown menu and assign it to a variable
     var testSubject = d3.select("#selDataset").node().value;
-    // Assign the value of the dropdown menu option to a variable
-    //var testSubject = dropdownMenu.property("value");
-      //console.log(testSubject)
 
     // Loop through the metadata and return just the row matching the dropdown value
     var washFreq;
     metadata.forEach(row => {
       if (row.id === parseInt(testSubject)) {
-          //console.log(row);
           washFreq = row.wfreq; // use this in the Gauge Chart
           var sampleDiv = d3.selectAll("#sample-metadata")
           // Clear out the previous test subject's data
           sampleDiv.html("");
           var ulTag = sampleDiv.append("ul");
-          //for (const [key, value] of Object.entries(row)) {
             Object.entries(row).forEach(([key, value]) =>
               ulTag.append("li").text(`${key}: ${value}`) 
             );
         }
-      //}
     });
 
     samples.forEach(sample => {
       if (sample.id === (testSubject)) {
-        //console.log(sample);
 
       // Horizontal Bar plot
       var sampleValues = sample.sample_values
@@ -256,7 +220,6 @@ function optionChanged() {
         .slice(0, 10)
         // Reverse the order so they get plotted correctly 
         .reverse();
-          //console.log(sampleValues);
 
       // Get the y axis data
       // Create a new array that concatenates OTU to the beginning of each otu_id
@@ -265,11 +228,9 @@ function optionChanged() {
         .slice(0,10)
         // Reverse the order for plotting
         .reverse();
-          //console.log(otuLabels);
 
       // Hovertext
       var otuHover = sample.otu_labels.slice(0,10).reverse();
-        //console.log(otuHover);
 
       var layout = {
         title: 'Top 10 OTUs',
@@ -322,6 +283,9 @@ function optionChanged() {
         
         var layout = {
           title: 'Prevalence of Microbes',
+          xaxis: {title: {
+            text: "OTU ID"}
+            },
           showlegend: false,
           height: 600,
           width: 1200
@@ -338,7 +302,7 @@ function optionChanged() {
     var level = washFreq;
 
     // Trig to calc meter point
-    var degrees = 180 - (level * 20), //multiplying by 20 to because the wash frequencies are not in degrees
+    var degrees = 180 - (level * 20), //multiplying by 20 because the wash frequencies are not in degrees
         radius = .5;
     var radians = degrees * Math.PI / 180;
     var x = radius * Math.cos(radians);
